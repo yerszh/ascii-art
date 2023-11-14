@@ -32,7 +32,7 @@ func printAscii(inputWords, banner string) error {
 		}
 	}
 
-	standardAscii, _ := os.ReadFile("banners/" + banner + ".txt")
+	standardAscii, _ := os.ReadFile("assets/" + banner + ".txt")
 	toSplit := map[string]string{
 		"standard":   "\n",
 		"shadow":     "\n",
