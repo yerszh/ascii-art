@@ -1,51 +1,46 @@
 # ascii-art
-Ascii-art is a program which consists in receiving a string as an argument and outputting the string in a graphic representation using ASCII.
 
-## Details
-- The program works with only one argument [STRING] and banners like shadow and thinkertoy.
-- Maximum number of characters is 30.
-- Characters are separated by a new line \n.
-- This project was written in Go and respects the good practices.
+## About programm
+
+    The program accepts arguments, such as the word that you want to see as a result and the banner that determines how this word will be displayed in the console if the banner is not specified, then the standard one will be applied
+
+    The program works with 1 argument that will be output to the screen as or with 2 arguments, the argument that will be output and the output method, the order is not important
+
+    To wrap a line in the argument that will be output, the hyphen must be specified as "\\n"
+
+    If the font files are deleted or changed, the program will not work
+
+## How run the program:
+
+    Go to the program directory
+
+#### Banners
+
+##### standard
+
+            _  _    
+          _| || |_  
+         |_  __  _| 
+          _| || |_  
+         |_  __  _| 
+           |_||_|   
 
 
-## Run Locally
-* Clone the project
+##### shadow
 
-```bash
-  git clone git@git.01.alem.school:yzhumyro/ascii-art.git
-```
+           _|  _|   
+         _|_|_|_|_| 
+           _|  _|   
+         _|_|_|_|_| 
+           _|  _|   
 
-* Go to the project directory
+##### thinkertoy
 
-```bash
-  cd ascii-art
-```
-
-* Run
-
-``` bash
-  go run main.go "string" [banner]
-```
-
+            | |  
+           -O-O- 
+            | |  
+           -O-O- 
+            | |  
 ## Usage
 
-``` bash
-$ go run . "hello" standard | cat -e
- _              _   _          $
-| |            | | | |         $
-| |__     ___  | | | |   ___   $
-|  _ \   / _ \ | | | |  / _ \  $
-| | | | |  __/ | | | | | (_) | $
-|_| |_|  \___| |_| |_|  \___/  $
-                               $
-                               $
-student$ go run . "Hello There" | cat -e
- _    _          _   _               _______   _                           $
-| |  | |        | | | |             |__   __| | |                          $
-| |__| |   ___  | | | |   ___          | |    | |__     ___   _ __    ___  $
-|  __  |  / _ \ | | | |  / _ \         | |    |  _ \   / _ \ | '__|  / _ \ $
-| |  | | |  __/ | | | | | (_) |        | |    | | | | |  __/ | |    |  __/ $
-|_|  |_|  \___| |_| |_|  \___/         |_|    |_| |_|  \___| |_|     \___| $
-                                                                           $
-                                                                           $                               
-```
+##### go run . "TEXT" "BANNER"
