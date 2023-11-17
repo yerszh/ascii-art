@@ -3,85 +3,87 @@ package main
 import (
 	"fmt"
 	"os"
-	"regexp"
-	"strings"
 )
 
-func formatWords(inputWords string) []string {
-	words := regexp.MustCompile(`\n|\\n`).Split(inputWords, -1)
-	onlyNewLines := true
-	for _, word := range words {
-		if word != "" {
-			onlyNewLines = false
-			break
-		}
-	}
-	if onlyNewLines {
-		return words[1:]
-	}
-	return words
+// Создание структуры данных
+type AsciiArt struct {
+	runeArrayOfText []rune //	Создание среза рун для представления текста ввиде рун
+	text            string //	Создания переменной для хранения текста
+	banner          string //	Создания переменной для хранения баннера для вывода текста
 }
 
-func printAscii(inputWords, banner string) error {
-	words := formatWords(inputWords)
-	for _, word := range words {
-		for _, r := range word {
-			if r < 32 || 126 < r {
-				return fmt.Errorf("error! use only latin letters")
-			}
+//	Функция для проверки аргументов
+func (ascii *AsciiArt) CheckForArgs(args []string) string {
+	if len(args) > 3 { //	Если Аргументов больше 3 или 1
+		return "Wrong number of arguments" //	Возврщения сообщения об ошибке
+	} else if len(args) == 3 { //	Если аргументов 3
+		switch os.Args[1] { //	Выбор для первого аргумента
+		case "standard": //	Если первый аргумент равен "standard"
+			ascii.banner = "standard" //	Изменения значения переменной на "standard"
+		case "shadow": //	Если первый аргумент равен "sahdow"
+			ascii.banner = "shadow" //	//	Изменения значения переменной на "sahdow"
+		case "thinkertoy": //	Если первый аргумент равен "thinkertoy"
+			ascii.banner = "thinkertoy" //	//	Изменения значения переменной на "thinkertoy"
+		default: //	Если нет совпадения
+			
+
+			ascii.text = args[1] //	Изменения значения переменной на совпадения в операторе выбора
+		}
+	} else if len(args) == 2 {
+		ascii.banner = "standard"
+		ascii.text = args[1] // Изменение значения на аргумент
+	} else if len(args) == 1 {
+		return "Wrong arguments"
+	}
+
+	if ascii.text == "" { //	Если переменная текста пустая
+		ascii.text = args[2] //	Изменения значения переменной на первый аргумент
+	}
+
+	textAfterCheckForASCII := "" // Создание переменной для проверки символом по таблице ASCII
+
+	for i := 0; i < len(ascii.text); i++ { // Цикл для проверки символом по таблице ASCII
+		if ascii.text[i] >= 0 && ascii.text[i] <= 126 { // Если символ имеет номер от 0 до 126
+			textAfterCheckForASCII = textAfterCheckForASCII + string(ascii.text[i]) // Сохранение символа
 		}
 	}
 
-	standardAscii, _ := os.ReadFile("assets/" + banner + ".txt")
-	toSplit := map[string]string{
-		"standard":   "\n",
-		"shadow":     "\n",
-		"thinkertoy": "\r\n",
-	}
-	bannerData := strings.Split(string(standardAscii), toSplit[banner])
+	ascii.text = textAfterCheckForASCII // Сохранение символов,которые прошли проверку
 
-	for _, word := range words {
-		if word == "" {
-			fmt.Println()
-			continue
-		}
-		for index := 1; index <= 8; index++ {
-			for _, ch := range word {
-				fmt.Print(bannerData[int((ch-32)*9)+index])
-			}
-			fmt.Println()
-		}
-	}
-	return nil
+	return "Pass" //	Возвращение сообщение об успешной проверке
 }
 
 func main() {
-	if len(os.Args) == 1 {
-		return
+	var ascii AsciiArt //	Создания переменной структуры
+
+	if ascii.CheckForArgs(os.Args) != "Pass" { //	Если возвращенное значение из функции неравно "Pass"
+		return //	Выход из программы
 	}
-	if len(os.Args[1]) > 30 {
-		fmt.Println(os.Args[1])
-		fmt.Println(`error! maximum number of characters is 30`)
-		return
+
+	ascii.banner = "assets/" + ascii.banner + ".txt" //	Конкатинация строк
+
+	for _, char := range ascii.text { //	Цикл для перебора текста
+		ascii.runeArrayOfText = append(ascii.runeArrayOfText, rune(char)) //	Добавление в срез текст в представлении ввиде рун
 	}
-	banner := "standard"
-	if len(os.Args) == 3 {
-		switch {
-		case regexp.MustCompile(`(?i)\bstandard\b`).MatchString(os.Args[2]):
-			banner = "standard"
-		case regexp.MustCompile(`(?i)\bshadow\b`).MatchString(os.Args[2]):
-			banner = "shadow"
-		case regexp.MustCompile(`(?i)\bthinkertoy\b`).MatchString(os.Args[2]):
-			banner = "thinkertoy"
-		}
-	}
-	if len(os.Args) > 3 {
-		fmt.Println(`error! invalid arguments, try: go run main.go "string" [banner]`)
-		return
-	}
-	err := printAscii(os.Args[1], banner)
-	if err != nil {
-		fmt.Println(err)
-		return
+
+	_, err := ascii.OpenFile() // Создание переменной для файла cо шрифтом
+
+	if err != nil { // Если есть ошибка при открытии файла с текстом
+		//  > Обработка ошибки при открытии файла с текстом и вывод сообщения
+		fmt.Println("The file could not be opened, the program will be closed", err) //||\\
+		/*fmt.Println("Создание файла - ", ascii.banner) // Вывод сообщения о попытке создани файла
+
+		file, err = ascii.CreateFile() // Повторное присвоение для файла cо шрифтом
+
+		if err != nil { // Если есть ошибка при создании файла cо шрифтом
+			fmt.Println("Ошибка при создании файла", err) // Обработка ошибки при создании файла cо шрифтом
+
+			return // Выход из программы
+		} else {
+			fmt.Println("Файл создан") // Вывод сообщения об успешном cоздании файла
+			ascii.WriteFile(file)      // Вызов функции
+		}*/
+	} else {
+		ascii.ReadFile() // Вызов функции
 	}
 }
