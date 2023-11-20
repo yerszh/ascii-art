@@ -5,14 +5,13 @@ import (
 	"os"
 )
 
-// Создание структуры данных
 type AsciiArt struct {
-	runeArrayOfText []rune //	Создание среза рун для представления текста ввиде рун
-	text            string //	Создания переменной для хранения текста
-	banner          string //	Создания переменной для хранения баннера для вывода текста
+	runeArrayOfText []rune 
+	text            string 
+	banner          string 
 }
 
-//	Функция для проверки аргументов
+
 func (ascii *AsciiArt) CheckForArgs(args []string) string {
 	if len(args) > 3 { //	Если Аргументов больше 3 или 1
 		return "Wrong number of arguments" //	Возврщения сообщения об ошибке
@@ -73,12 +72,14 @@ func main() {
 		fmt.Println("The file could not be opened, the program will be closed", err) //||\\
 		fmt.Println("Создание файла - ", ascii.banner) // Вывод сообщения о попытке создани файла
 
+		
 		if err != nil { // Если есть ошибка при создании файла cо шрифтом
 			fmt.Println("Ошибка при создании файла", err) // Обработка ошибки при создании файла cо шрифтом
 
 			return // Выход из программы
 		} else {
 			fmt.Println("Файл создан") // Вывод сообщения об успешном cоздании файла
+
 		}
 	} else {
 		ascii.ReadFile() // Вызов функции
