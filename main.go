@@ -13,20 +13,29 @@ type AsciiArt struct {
 
 
 func (ascii *AsciiArt) CheckForArgs(args []string) string {
-	if len(args) > 3 { //	Если Аргументов больше 3 или 1
-		return "Wrong number of arguments" //	Возврщения сообщения об ошибке
-	} else if len(args) == 3 { //	Если аргументов 3
-		switch os.Args[1] { //	Выбор для первого аргумента
-		case "standard": //	Если первый аргумент равен "standard"
-			ascii.banner = "standard" //	Изменения значения переменной на "standard"
-		case "shadow": //	Если первый аргумент равен "sahdow"
-			ascii.banner = "shadow" //	//	Изменения значения переменной на "sahdow"
-		case "thinkertoy": //	Если первый аргумент равен "thinkertoy"
-			ascii.banner = "thinkertoy" //	//	Изменения значения переменной на "thinkertoy"
-		default: //	Если нет совпадения
-			
+	if len(args) > 3 { 
+		return "Wrong number of arguments" 
+	} else if len(args) == 3 { 
+		switch os.Args[1] { 
+		case "standard": 
+			ascii.banner = "standard" 
+		case "shadow": 
+			ascii.banner = "shadow" 
+		case "thinkertoy": 
+			ascii.banner = "thinkertoy"
+			default: 
+			switch args[2] { 
+			case "standard":
+				ascii.banner = "standard"
+			case "shadow":
+				ascii.banner = "shadow"
+			case "thinkertoy":
+				ascii.banner = "thinkertoy"
+			default:
+				return "Wrong arguments"
+			}
 
-			ascii.text = args[1] //	Изменения значения переменной на совпадения в операторе выбора
+			ascii.text = args[1]
 		}
 	} else if len(args) == 2 {
 		ascii.banner = "standard"
