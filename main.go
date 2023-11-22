@@ -39,26 +39,26 @@ func (ascii *AsciiArt) CheckForArgs(args []string) string {
 		}
 	} else if len(args) == 2 {
 		ascii.banner = "standard"
-		ascii.text = args[1] // Изменение значения на аргумент
+		ascii.text = args[1] 
 	} else if len(args) == 1 {
 		return "Wrong arguments"
 	}
 
-	if ascii.text == "" { //	Если переменная текста пустая
-		ascii.text = args[2] //	Изменения значения переменной на первый аргумент
+	if ascii.text == "" { 
+		ascii.text = args[2] 
 	}
 
-	textAfterCheckForASCII := "" // Создание переменной для проверки символом по таблице ASCII
+	textAfterCheckForASCII := "" 
 
-	for i := 0; i < len(ascii.text); i++ { // Цикл для проверки символом по таблице ASCII
-		if ascii.text[i] >= 0 && ascii.text[i] <= 126 { // Если символ имеет номер от 0 до 126
-			textAfterCheckForASCII = textAfterCheckForASCII + string(ascii.text[i]) // Сохранение символа
+	for i := 0; i < len(ascii.text); i++ { 
+		if ascii.text[i] >= 0 && ascii.text[i] <= 126 { 
+			textAfterCheckForASCII = textAfterCheckForASCII + string(ascii.text[i]) 
 		}
 	}
 
-	ascii.text = textAfterCheckForASCII // Сохранение символов,которые прошли проверку
+	ascii.text = textAfterCheckForASCII 
 
-	return "Pass" //	Возвращение сообщение об успешной проверке
+	return "Pass" 
 }
 
 func main() {
