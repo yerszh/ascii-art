@@ -62,16 +62,16 @@ func (ascii *AsciiArt) CheckForArgs(args []string) string {
 }
 
 func main() {
-	var ascii AsciiArt //	Создания переменной структуры
+	var ascii AsciiArt 
 
-	if ascii.CheckForArgs(os.Args) != "Pass" { //	Если возвращенное значение из функции неравно "Pass"
-		return //	Выход из программы
+	if ascii.CheckForArgs(os.Args) != "Pass" { 
+		return 
 	}
 
-	ascii.banner = "assets/" + ascii.banner + ".txt" //	Конкатинация строк
+	ascii.banner = "assets/" + ascii.banner + ".txt" 
 
-	for _, char := range ascii.text { //	Цикл для перебора текста
-		ascii.runeArrayOfText = append(ascii.runeArrayOfText, rune(char)) //	Добавление в срез текст в представлении ввиде рун
+	for _, char := range ascii.text { 
+		ascii.runeArrayOfText = append(ascii.runeArrayOfText, rune(char)) 
 	}
 
 	_, err := ascii.OpenFile() // Создание переменной для файла cо шрифтом
@@ -79,17 +79,18 @@ func main() {
 	if err != nil { // Если есть ошибка при открытии файла с текстом
 		//  > Обработка ошибки при открытии файла с текстом и вывод сообщения
 		fmt.Println("The file could not be opened, the program will be closed", err) //||\\
-		fmt.Println("Создание файла - ", ascii.banner) // Вывод сообщения о попытке создани файла
+		/*fmt.Println("Создание файла - ", ascii.banner) // Вывод сообщения о попытке создани файла
 
-		
+		file, err = ascii.CreateFile() // Повторное присвоение для файла cо шрифтом
+
 		if err != nil { // Если есть ошибка при создании файла cо шрифтом
 			fmt.Println("Ошибка при создании файла", err) // Обработка ошибки при создании файла cо шрифтом
 
 			return // Выход из программы
 		} else {
 			fmt.Println("Файл создан") // Вывод сообщения об успешном cоздании файла
-
-		}
+			ascii.WriteFile(file)      // Вызов функции
+		}*/
 	} else {
 		ascii.ReadFile() // Вызов функции
 	}
