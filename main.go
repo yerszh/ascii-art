@@ -74,13 +74,13 @@ func main() {
 		ascii.runeArrayOfText = append(ascii.runeArrayOfText, rune(char)) 
 	}
 
-	_, err := ascii.OpenFile() // Создание переменной для файла cо шрифтом
+	_, err := ascii.OpenFile() 
 
-	if err != nil { // Если есть ошибка при открытии файла с текстом
-		//  > Обработка ошибки при открытии файла с текстом и вывод сообщения
-		fmt.Println("The file could not be opened, the program will be closed", err) //||\\
+	if err != nil { 
+		
+		fmt.Println("The file could not be opened, the program will be closed", err) 
 		
 	} else {
-		ascii.ReadFile() // Вызов функции
+		ascii.ReadFile() 
 	}
 }
