@@ -9,14 +9,7 @@ import (
 	"strings"
 )
 
-// Функция для создания файла
-/*func (ascii *AsciiArt) CreateFile() (*os.File, error) {
-	file, err := os.Create(ascii.banner) // Создание файла
 
-	return file, err // Возвращение файла и ошибки для дальнейшей обработки
-}*/
-
-// Функция для открытия файла
 func FileMD5(path string) string {
 	h := md5.New()
 	f, err := os.Open(path)
@@ -32,9 +25,8 @@ func FileMD5(path string) string {
 }
 
 func (ascii *AsciiArt) OpenFile() (*os.File, error) {
-	file, err := os.OpenFile(ascii.banner, os.O_RDONLY, 0666) // Открытие файла и для чтения и для записи
-
-	return file, err // Возвращение файла и ошибки для дальнейшей обработки
+	file, err := os.OpenFile(ascii.banner, os.O_RDONLY, 0666) 
+	return file, err 
 }
 
 // Функция для определения новой строки
