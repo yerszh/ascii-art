@@ -29,19 +29,18 @@ func (ascii *AsciiArt) OpenFile() (*os.File, error) {
 	return file, err 
 }
 
-// Функция для определения новой строки
+
 func onlyNewLines(input []string) bool {
-	for _, ch := range input { // Цикл для перебора аргумента для вывода
-		if ch != "" { // Проверка на пустую строку
-			return false // Возвращаем false
+	for _, ch := range input { 
+		if ch != "" { 
+			return false 
 		}
 	}
-	return true // Возвращаем true
+	return true 
 }
 
-// Функция для чтения из файла и вывода на экран
 func (ascii *AsciiArt) ReadFile() {
-	dataBytes, _ := os.ReadFile(ascii.banner) // Считываем содержимое файла в байтовый массив.
+	dataBytes, _ := os.ReadFile(ascii.banner) 
 	checkHashSumFile := FileMD5(ascii.banner)
 	filePass := true
 
