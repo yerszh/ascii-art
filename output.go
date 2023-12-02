@@ -62,11 +62,11 @@ func (ascii *AsciiArt) ReadFile() {
 	if filePass {
 		standardAscii := []string{}
 
-		if ascii.banner == "assets/thinkertoy.txt" { // Проверяем, является ли файл "assets/thinkertoy.txt".
+		if ascii.banner == "assets/thinkertoy.txt" { 
 
-			standardAscii = strings.Split(string(dataBytes), "\r\n") // Разделяем текст по символам перевода строки Windows.
+			standardAscii = strings.Split(string(dataBytes), "\r\n") 
 		} else {
-			standardAscii = strings.Split(string(dataBytes), "\n") // Разделяем текст по обычным символам перевода строки.
+			standardAscii = strings.Split(string(dataBytes), "\n") 
 		}
 
 		inputWords := ascii.text                                            // Получаем входные слова для преобразования в ASCII-арт.
