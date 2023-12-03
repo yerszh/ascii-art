@@ -69,22 +69,22 @@ func (ascii *AsciiArt) ReadFile() {
 			standardAscii = strings.Split(string(dataBytes), "\n") 
 		}
 
-		inputWords := ascii.text                                            // Получаем входные слова для преобразования в ASCII-арт.
-		splittedWords := regexp.MustCompile(`\n|\\n`).Split(inputWords, -1) // Разбиваем входные слова на части, используя регулярное выражение.
+		inputWords := ascii.text                                            
+		splittedWords := regexp.MustCompile(`\n|\\n`).Split(inputWords, -1) 
 
-		if onlyNewLines(splittedWords) { // Проверяем, состоит ли текст только из символов перевода строки.
+		if onlyNewLines(splittedWords) { 
 
-			splittedWords = splittedWords[1:] // Если да, удаляем первый элемент (пустую строку).
+			splittedWords = splittedWords[1:] 
 		}
 
-		for _, word := range splittedWords { // Проходим по разбитым словам и отображаем их в виде ASCII-арт.
+		for _, word := range splittedWords { 
 			if word == "" {
 				fmt.Println()
 				continue
 			}
 			for index := 1; index <= 8; index++ {
 				for _, ch := range word {
-					fmt.Print(standardAscii[int((ch-32)*9)+index]) // Отображаем соответствующий символ ASCII из стандартного набора.
+					fmt.Print(standardAscii[int((ch-32)*9)+index]) 
 				}
 				fmt.Println()
 			}
