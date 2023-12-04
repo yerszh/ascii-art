@@ -9,7 +9,6 @@ import (
 	"strings"
 )
 
-
 func FileMD5(path string) string {
 	h := md5.New()
 	f, err := os.Open(path)
@@ -28,7 +27,6 @@ func (ascii *AsciiArt) OpenFile() (*os.File, error) {
 	file, err := os.OpenFile(ascii.banner, os.O_RDONLY, 0666) 
 	return file, err 
 }
-
 
 func onlyNewLines(input []string) bool {
 	for _, ch := range input { 
@@ -63,7 +61,6 @@ func (ascii *AsciiArt) ReadFile() {
 		standardAscii := []string{}
 
 		if ascii.banner == "assets/thinkertoy.txt" { 
-
 			standardAscii = strings.Split(string(dataBytes), "\r\n") 
 		} else {
 			standardAscii = strings.Split(string(dataBytes), "\n") 
@@ -73,7 +70,6 @@ func (ascii *AsciiArt) ReadFile() {
 		splittedWords := regexp.MustCompile(`\n|\\n`).Split(inputWords, -1) 
 
 		if onlyNewLines(splittedWords) { 
-
 			splittedWords = splittedWords[1:] 
 		}
 

@@ -77,9 +77,7 @@ func main() {
 	_, err := ascii.OpenFile() 
 
 	if err != nil { 
-		
 		fmt.Println("The file could not be opened, the program will be closed", err) 
-		
 	} else {
 		ascii.ReadFile() 
 	}
