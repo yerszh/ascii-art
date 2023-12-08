@@ -18,25 +18,22 @@ func Fs() {
 		fmt.Println("Wrong number of arguments") 
 	}
 
-	if internal.CheckForChangeFile("assets/"+banner+".txt", banner) { // Если файл не изменен
-		splitedWords, standardAscii := internal.PrepareForOutput(banner, text) // Сохранение результата функции
-
-		for _, word := range splitedWords { // Проходим по разбитым словам и отображаем их в виде ASCII-арт.
-			if word == "" { //  Если равно пустоте
-				fmt.Println() // Добавление новой строки
-
-				continue //	Следующий элемент
+	if internal.CheckForChangeFile("assets/"+banner+".txt", banner) { 
+		splitedWords, standardAscii := internal.PrepareForOutput(banner, text) 
+		for _, word := range splitedWords { 
+			if word == "" {
+				fmt.Println()
+				continue 
 			}
-			for index := 1; index <= 8; index++ { // Цикл для отображения 8 строк текста ввиде графического ключа
-				for _, ch := range word { //	Цикл, для каждой буквы текста
-					fmt.Print(standardAscii[int((ch-32)*9)+index]) // Отображаем соответствующий символ ASCII из стандартного набора.
+			for index := 1; index <= 8; index++ { 
+				for _, ch := range word { 
+					fmt.Print(standardAscii[int((ch-32)*9)+index])
 				}
 				fmt.Println()
 			}
 		}
 	} else {
-		fmt.Println("The file has been changed , the program will close") // Вывод сообщения об изменении в файле
-
-		os.Exit(1) // Выход из программы с ошибкой 1
+		fmt.Println("The file has been changed , the program will close") 
+		os.Exit(1)
 	}
 }
