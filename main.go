@@ -8,15 +8,15 @@ import (
 )
 
 func main() {
-	if len(os.Args) >= 2 { // Если кол-во аргументов больше или равно 2
-		flag := internal.ClearFlag(os.Args[1]) // Сохранение результата функции
+	if len(os.Args) >= 2 { 
+		flag := internal.ClearFlag(os.Args[1]) 
 
-		switch flag { // Выбор между результатом функции для определения опционалки
+		switch flag { 
 		
-		default: // Если совпадения не было
+		default: 
 			option.Fs()
 		}
 	} else {
-		fmt.Println("Wrong number of arguments") // Вывод сообщения
+		fmt.Println("Wrong number of arguments") 
 	}
 }
