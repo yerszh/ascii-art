@@ -7,15 +7,15 @@ import (
 )
 
 func Fs() {
-	var banner string  // Переменная для хранения имени файла со шрифтами
-	text := os.Args[1] // Переменная для хранения текста
+	var banner string  
+	text := os.Args[1] 
 
-	if len(os.Args) == 3 { //	Если аргументов 2
-		banner = os.Args[2] // Изменить значение на третий аргумент
-	} else if len(os.Args) == 2 { //	Если аргумент 1
-		banner = "standard" //	Изменить значение на standard
+	if len(os.Args) == 3 { 
+		banner = os.Args[2] 
+	} else if len(os.Args) == 2 { 
+		banner = "standard" 
 	} else {
-		fmt.Println("Wrong number of arguments") // Вывод сообщения
+		fmt.Println("Wrong number of arguments") 
 	}
 
 	if internal.CheckForChangeFile("assets/"+banner+".txt", banner) { // Если файл не изменен
