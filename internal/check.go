@@ -7,48 +7,47 @@ import (
 	"os"
 )
 
-//	Функция для удаления лишнего и сохранение флага из аргумента
-func ClearFlag(firstArgument string) string { //
-	flag := "" //	Создание пустой переменной для хранения флага								 					  \
+func ClearFlag(firstArgument string) string { 
+	flag := "" 							 					  
 
-	for _, char := range firstArgument { //	Перебор по символам первого аргумента										\
-		if char != '=' { //	Если символ неравен =
-			flag += string(char) //	Конкатинация посимвольно с первого аргумента в переменную для хранения флага		  >  УДАЛЕНИЕ ЛИШЕНГО И СОХРАНЕНИЕ ФЛАГА ИЗ ПЕРВОГО АРГУМЕНТА
-		} else { //	Если символ равен =
-			break //	Выход из цикла																					/
+	for _, char := range firstArgument {									
+		if char != '=' { 
+			flag += string(char) 
+		} else { 
+			break 
 		}
-	} //																											  /
+	} 																											  
 
-	return flag //	Возвращение переменной с флагом
+	return flag 
 }
 
-// Функция для хеширования содержимого файла
+
 func FileMD5(path string) string {
-	h := md5.New() // Создаем новый экземпляр хеш-функции MD5
+	h := md5.New() 
 
-	f, err := os.Open(path) // Открываем файл по заданному пути
-	if err != nil {         // Если возникла ошибка при открытии файла
-		os.Exit(1) // Выход из программы с ошибкой 1
+	f, err := os.Open(path) 
+	if err != nil {     
+		os.Exit(1) 
 	}
 
-	defer f.Close() // Закрываем файл после завершения функции
+	defer f.Close() 
 
-	_, err = io.Copy(h, f) // Копируем содержимое файла в хеш-функцию MD5
-	if err != nil {        // Если возникла ошибка при копировании
-		os.Exit(1) // Выход из программы с ошибкой 1
+	_, err = io.Copy(h, f) 
+	if err != nil {    
+		os.Exit(1) 
 	}
 
-	return fmt.Sprintf("%x", h.Sum(nil)) // Возвращаем значение MD5-хеша в виде строки в шестнадцатеричном формате
+	return fmt.Sprintf("%x", h.Sum(nil)) 
 }
 
-// Функция для проверки на изменения в файлах со шрифтами
-func CheckForChangeFile(textAsFileName string, banner string) bool {
-	checkHashSumFile := FileMD5(textAsFileName) //	Сохранение результата функции
 
-	switch banner { //	Выбор для 3 аргумента
-	case "standard": //	Если равен standard
-		if "ac85e83127e49ec42487f272d9b9db8b" != checkHashSumFile { // Если результат функции равен готовому хешу
-			return false // Возвращение false
+func CheckForChangeFile(textAsFileName string, banner string) bool {
+	checkHashSumFile := FileMD5(textAsFileName) 
+
+	switch banner { 
+	case "standard": 
+		if "ac85e83127e49ec42487f272d9b9db8b" != checkHashSumFile { 
+			return false 
 		}
 	case "thinkertoy":
 		if "86d9947457f6a41a18cb98427e314ff8" != checkHashSumFile {
@@ -60,5 +59,5 @@ func CheckForChangeFile(textAsFileName string, banner string) bool {
 		}
 	}
 
-	return true // Возвращение trues
+	return true 
 }
