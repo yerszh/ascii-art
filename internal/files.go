@@ -5,33 +5,26 @@ import (
 	"os"
 )
 
-// Функция для нахождения имени файла в первом вргументе
 func FindFile(firstArgument string) string {
-	textAsFileName := "" // Создание пустой переменной для хранении имени файла
-
-	for i := len(firstArgument) - 1; i > 0; i-- { // Перебор посимвольно первого аргумента с конца
-		if firstArgument[i] != '=' { //	Если символ неравен <
-			textAsFileName = string(firstArgument[i]) + textAsFileName // Конкатинация посимвольно с первого аргумента в переменную для хранения флага
-		} else { //	Если символ равен <
-			break //	Выход из цикла
+	textAsFileName := ""
+	for i := len(firstArgument) - 1; i > 0; i-- {
+		if firstArgument[i] != '=' {
+			textAsFileName = string(firstArgument[i]) + textAsFileName
+		} else {
+			break
 		}
 	}
-
-	return textAsFileName //	Возвращение переменной с именем файла
+	return textAsFileName
 }
 
-// Функция для открытия файла
 func OpenFile(fileName string) (*os.File, error) {
-	file, err := os.OpenFile(fileName, os.O_RDWR, 0666) // Открытие файла и для чтения и для записи
-
-	return file, err // Возвращение файла и ошибки для дальнейшей обработки
+	file, err := os.OpenFile(fileName, os.O_RDWR, 0666)
+	return file, err
 }
 
-// Функция для создания файла
 func CreateFile(fileName string) (*os.File, error) {
-	file, err := os.Create(fileName) // Создание файла
-
-	return file, err // Возвращение файла и ошибки для дальнейшей обработки
+	file, err := os.Create(fileName)
+	return file, err
 }
 
 // Функция для записи в файла
