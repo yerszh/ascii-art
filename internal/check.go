@@ -9,7 +9,6 @@ import (
 
 func ClearFlag(firstArgument string) string { 
 	flag := "" 							 					  
-
 	for _, char := range firstArgument {									
 		if char != '=' { 
 			flag += string(char) 
@@ -17,19 +16,16 @@ func ClearFlag(firstArgument string) string {
 			break 
 		}
 	} 																											  
-
 	return flag 
 }
 
 
 func FileMD5(path string) string {
 	h := md5.New() 
-
 	f, err := os.Open(path) 
 	if err != nil {     
 		os.Exit(1) 
 	}
-
 	defer f.Close() 
 
 	_, err = io.Copy(h, f) 
@@ -58,6 +54,5 @@ func CheckForChangeFile(textAsFileName string, banner string) bool {
 			return false
 		}
 	}
-
 	return true 
 }
