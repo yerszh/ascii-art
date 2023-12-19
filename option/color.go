@@ -9,19 +9,16 @@ import (
 )
 
 func Atoi(text string) int {
-	result := 0 // Создание переменной для дальнейшего сохранения результата
-
-	for _, char := range text { // Цикл для перебора элементов строки
-		if char >= '0' && char <= '9' { // Если элемент строки цифра
-			number := int(char - '0')   // Преобразование этой byte в int
-			result = result*10 + number //  Сохранение цифры и умножение предыдущей сохраненой на 10
+	result := 0
+	for _, char := range text {
+		if char >= '0' && char <= '9' {
+			number := int(char - '0')
+			result = result*10 + number
 		}
 	}
-
-	return result // Возвращение преобразованного числа
+	return result
 }
 
-// Функция для нахождения кодов
 func FindRGB(color string) (int, int, int) {
 	arrayOfRGBSystem := []string{}
 	r, g, b := 0, 0, 0
@@ -32,22 +29,19 @@ func FindRGB(color string) (int, int, int) {
 		b = Atoi(os.Args[3])
 	} else {
 		arrayOfRGBSystem = strings.Split(color, ",")
-
 		if len(arrayOfRGBSystem) == 3 {
 			r = Atoi(arrayOfRGBSystem[0])
 			g = Atoi(arrayOfRGBSystem[1])
 			b = Atoi(arrayOfRGBSystem[2])
 		}
 	}
-
 	return r, g, b
 }
 
-// Функция для определения цвета
 func PickColor(color string) string {
-	switch color { // Выбор между указанным цветом
-	case "black": // Если равно black
-		return "\u001b[30m" // Возвращение значения по коду ansi
+	switch color {
+	case "black":
+		return "\u001b[30m"
 	case "red":
 		return "\u001b[31m"
 	case "green":
@@ -63,13 +57,13 @@ func PickColor(color string) string {
 	case "white":
 		return "\u001b[37m"
 	}
-
-	return "Failed" // Если совпадения нет, то возвращения ошибки
+	return "Failed"
 }
 
 func rgbToAnsi(r, g, b int) string {
-	return fmt.Sprintf("\x1b[38;2;%d;%d;%dm", r, g, b) // Экранирующие коды ANSI
+	return fmt.Sprintf("\x1b[38;2;%d;%d;%dm", r, g, b)
 }
+
 
 // Функция для опционалки output
 func Color() {
