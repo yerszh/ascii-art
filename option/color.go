@@ -65,38 +65,36 @@ func rgbToAnsi(r, g, b int) string {
 }
 
 
-// Функция для опционалки output
 func Color() {
-	color := strings.ToLower(internal.FindFile(os.Args[1])) // Сохранение первого аргумента как увет и преобразования его в нижний регистр
+	color := strings.ToLower(internal.FindFile(os.Args[1]))
 
-	if color == "failed" { // Если не прописан флаг и его аргумент
-		fmt.Println("Missing argument\nTry like this  --> \" --color=rgb(48, 255, 229)\"") // Вывод сообщение о пропущенном аргументе
-
-		os.Exit(1) // Выход из программы с ошибкой 1
+	if color == "failed" {
+		fmt.Println("Missing argument\nTry like this  --> \" --color=rgb(48, 255, 229)\"")
+		os.Exit(1)
 	}
 
 	var ansiCode string
 	var r, g, b int
-	var letterToBeColored string // Переменная для хранения букв, которые нужно перекрасить
-	var text string              // Переменная для хранения текста
-	var banner string            // Переменная для хранения баннера
+	var letterToBeColored string
+	var text string
+	var banner string
 
 	if color[len(color)-1] == ',' {
-		r, g, b = FindRGB(color)      // Сохранение результата функции
-		ansiCode = rgbToAnsi(r, g, b) // Сохранение результата функции
+		r, g, b = FindRGB(color)
+		ansiCode = rgbToAnsi(r, g, b)
 
-		switch len(os.Args) { // Выбор между кол-вом аргументов
+		switch len(os.Args) {
 		case 7:
-			letterToBeColored = os.Args[4] // Сохранения значения 2 аргумента как буквы, которые нужно перекрасить
-			text = os.Args[5]              // Сохранение значения 3 аргумента как текст
-			banner = os.Args[6]            // Сохранение значения 4 аргумента как баннер
-		case 6: // Есди кол-во аргументов равно 5
+			letterToBeColored = os.Args[4]
+			text = os.Args[5]
+			banner = os.Args[6]
+		case 6:
 			if internal.CheckIsBanner(os.Args[len(os.Args)-1]) {
 				text = os.Args[4]
-				banner = os.Args[5] // Сохранение значения 4 аргумента как баннер
+				banner = os.Args[5]
 			} else {
-				letterToBeColored = os.Args[4] // Сохранения значения 2 аргумента как буквы, которые нужно перекрасить
-				text = os.Args[5]              // Сохранение значения 3 аргумента как текст
+				letterToBeColored = os.Args[4]
+				text = os.Args[5]
 				banner = "standard"
 			}
 		case 5:
@@ -106,30 +104,28 @@ func Color() {
 	} else {
 		if color[len(color)-1] == ')' {
 			r, g, b = FindRGB(color)
-			ansiCode = rgbToAnsi(r, g, b) // Сохранение результата функции
+			ansiCode = rgbToAnsi(r, g, b)
 		} else {
 			ansiCode = PickColor(color)
-
 			if ansiCode == "Failed" {
-				fmt.Println("Wrong color\nChoose one of these colors --> black, red, gree, yellow, blue, magenta, cyan, white") // Вывод сообщения
-
+				fmt.Println("Wrong color\nChoose one of these colors --> black, red, gree, yellow, blue, magenta, cyan, white")
 				os.Exit(1)
 			}
 		}
 
-		switch len(os.Args) { // Выбор между кол-вом аргументов
-		case 5: // Есди кол-во аргументов равно 5
-			letterToBeColored = os.Args[2] // Сохранения значения 2 аргумента как буквы, которые нужно перекрасить
-			text = os.Args[3]              // Сохранение значения 3 аргумента как текст
-			banner = os.Args[4]            // Сохранение значения 4 аргумента как баннер
+		switch len(os.Args) {
+		case 5:
+			letterToBeColored = os.Args[2]
+			text = os.Args[3]
+			banner = os.Args[4]
 		case 4:
-			if os.Args[len(os.Args)-1] == "standard" || os.Args[len(os.Args)-1] == "shadow" || os.Args[len(os.Args)-1] == "thinkertoy" { // Если последний аргумент равен одному из значений
+			if os.Args[len(os.Args)-1] == "standard" || os.Args[len(os.Args)-1] == "shadow" || os.Args[len(os.Args)-1] == "thinkertoy" {
 				text = os.Args[2]
 				banner = os.Args[3]
 			} else {
 				letterToBeColored = os.Args[2]
 				text = os.Args[3]
-				banner = "standard" // Изменение значения на standard
+				banner = "standard"
 			}
 		case 3:
 			text = os.Args[2]
@@ -137,59 +133,53 @@ func Color() {
 		}
 	}
 
-	resetCode := "\x1b[0m"                            // Удалить цвет
-	text, notValidText := internal.CheckIsAscii(text) // Переменная для хранения текста
+	resetCode := "\x1b[0m"
+	text, notValidText := internal.CheckIsAscii(text)
 
-	if notValidText != "" { // Если нет валидного текста
-		fmt.Println(notValidText) // Вывод сообщения об ошибки
-
-		os.Exit(1) // Выход из программы
-	}
-
-	if !internal.CheckIsBanner(banner) {
-		fmt.Println("Wrong number of arguments\nUsage: \"go run . --color=rgb(48, 255, 229) smthng something thinkertoy\"") // Вывод сообщения
-
+	if notValidText != "" {
+		fmt.Println(notValidText)
 		os.Exit(1)
 	}
 
-	if internal.CheckForChangeFile("assets/"+banner+".txt", banner) { // Если файл не изменен
-		splitedWords, standardAscii := internal.PrepareForOutput(banner, text) // Сохранение результата функции
+	if !internal.CheckIsBanner(banner) {
+		fmt.Println("Wrong number of arguments\nUsage: \"go run . --color=rgb(48, 255, 229) smthng something thinkertoy\"")
+		os.Exit(1)
+	}
+
+	if internal.CheckForChangeFile("assets/"+banner+".txt", banner) {
+		splitedWords, standardAscii := internal.PrepareForOutput(banner, text)
 
 		for _, word := range splitedWords {
 			if word == "" {
-				fmt.Println() // Новая строка
-
-				continue // Следующий элемент
+				fmt.Println()
+				continue
 			}
 
-			for index := 1; index <= 8; index++ { // Цикл для отображения 8 строк текста ввиде графического ключа
-				for _, ch := range word { //	Цикл, для каждой буквы текста
-					colored := false // Переменная для определения, должен ли символ быть раскрашен
-
-					if len(letterToBeColored) != 0 { // Если буквы для окраски есть
-						for _, letter := range letterToBeColored { // Перебор букв для окраски
-							if ch == letter { //	Если буквы совпадают
-								colored = true //	Изменение значения на true
-								break          //	Выход из цикла
+			for index := 1; index <= 8; index++ {
+				for _, ch := range word {
+					colored := false
+					if len(letterToBeColored) != 0 {
+						for _, letter := range letterToBeColored {
+							if ch == letter {
+								colored = true
+								break
 							}
 						}
-					} else { // Если буквы для окраски нет
+					} else {
 						colored = true
 					}
 
-					if colored { // Значение true
-						fmt.Print(ansiCode, standardAscii[int((ch-32)*9)+index]) //	Вывод окрашенных строк, сверху=вниз
+					if colored {
+						fmt.Print(ansiCode, standardAscii[int((ch-32)*9)+index])
 					} else {
-						fmt.Print(resetCode, standardAscii[int((ch-32)*9)+index]) // Вывод обычных строк, сверху-вниз
+						fmt.Print(resetCode, standardAscii[int((ch-32)*9)+index])
 					}
 				}
-
 				fmt.Println()
 			}
 		}
 	} else {
-		fmt.Println("The file has been changed , the program will close") // Вывод сообщения об изменении в файле
-
-		os.Exit(1) // Выход из программы с ошибкой 1
+		fmt.Println("The file has been changed , the program will close")
+		os.Exit(1)
 	}
 }
