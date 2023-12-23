@@ -13,7 +13,17 @@ func Output() {
 
 	var banner string 
 
-	
+	if len(os.Args) == 4 { 
+		banner = os.Args[3] 
+	} else { 
+		banner = "standard" 
+	}
+
+	if !internal.CheckIsBanner(banner) {
+		fmt.Println("Wrong number of arguments\nUsage: \"go run . --color=48, 255, 229 smthng something thinkertoy\"") 
+
+		os.Exit(1)
+	}
 
 	if internal.CheckForChangeFile("assets/"+banner+".txt", banner) { 
 		splitedWords, standardAscii := internal.PrepareForOutput(banner, os.Args[2]) 
