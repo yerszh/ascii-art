@@ -10,51 +10,41 @@ import (
 	internal "ascii-art-output/internal"
 )
 
-// Функция для подсчета пробелов в тексте
 func SpaceCount(text string) int {
-	counterForSpaceInText := 0 // Создание переменной с 0 значением
-
-	for i := 0; i < len(text); i++ { // Цикл для перебора символов в тексте
+	counterForSpaceInText := 0
+	for i := 0; i < len(text); i++ {
 		if i != 0 && i <= len(text)-2 {
-			if text[i-1] != ' ' && text[i] == ' ' { // Если символ равен " "
-				counterForSpaceInText++ // Увеличение переменной на 1
+			if text[i-1] != ' ' && text[i] == ' ' {
+				counterForSpaceInText++
 			}
 		}
 	}
-
-	return counterForSpaceInText // Возвращение значения
+	return counterForSpaceInText
 }
 
-// Функция для создания пробелов в ширину терминала
 func CreateSpaces(lineFormArrayOfOutput string, terminalWidth int) string {
-	spaces := "" // Создание пустой переменной для будущих пробелов
-
-	for terminalWidth-len(lineFormArrayOfOutput) > 0 { // Цикл пока в терминале есть место для пробелов
-		spaces += " "   // Создание пробела
-		terminalWidth-- // Ширина терминала -1
+	spaces := ""
+	for terminalWidth-len(lineFormArrayOfOutput) > 0 {
+		spaces += " "
+		terminalWidth--
 	}
-
-	return spaces // Возвращение значения с пробелами
+	return spaces
 }
 
-// Функция для определения ширины терминала
 func GetTermWidth() int {
-	out, er1 := exec.Command("tput", "cols").Output() // Выполнить команду "tput cols" и получить результат
-	out1 := strings.TrimSpace(string(out))            // Удалить лишние пробелы из вывода
-	num, er2 := strconv.Atoi(out1)                    // Преобразовать строку в целое число
-
-	if er1 != nil { // Проверить ошибки при выполнении команды "tput cols"
+	out, er1 := exec.Command("tput", "cols").Output()
+	out1 := strings.TrimSpace(string(out))
+	num, er2 := strconv.Atoi(out1)
+	if er1 != nil {
 		os.Exit(0)
 	}
-
-	if er2 != nil { // Проверить ошибки при преобразовании строки в число
+	if er2 != nil {
 		os.Exit(0)
 	}
-
-	return num // Возвращение значение ширины терминала
+	return num
 }
 
-// Функция для применения флага
+
 func Aling(align string, output string, text string) {
 	arrayOfOutputWrong := strings.Split(output, "\n")                  // Разделение входящей строки и преобразование ее в массив
 	arrayOfOutput := arrayOfOutputWrong[0 : len(arrayOfOutputWrong)-1] // Удаление последнего элемента
