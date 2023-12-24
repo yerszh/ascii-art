@@ -99,60 +99,51 @@ func Aling(align string, output string, text string) {
 
 
 func Justify() {
-	align := internal.FindFile(os.Args[1]) // Сохранение значения 1 аргумента как флаг
-
-	if align == "Failed" { // Если не прописан флаг и его аргумент
-		fmt.Println("Missing argument") // Вывод сообщение о пропущенном аргументе
-
-		os.Exit(0) // Выход из программы с ошибкой 1
-	}
-
-	var text string   // Переменная для хранения текста
-	var banner string // Переменная для хранения баннера
-
-	if len(os.Args) == 4 { //	Если кол-во аргументов 4
-		text = os.Args[2]   //  Сохранение значения 3 аргумента как текст
-		banner = os.Args[3] //	Сохранение значения 4 аргумента как баннер
-	} else { //	Если кол-во аргументов 3
-		text = os.Args[2]
-		banner = "standard" //	Изменение значения на standard
-	}
-
-	text, notValidText := internal.CheckIsAscii(text) // Переменная для хранения текста
-
-	if notValidText != "" { // Если нет валидного текста
-		fmt.Println(notValidText) // Вывод сообщения об ошибки
-
-		os.Exit(0) // Выход из программы
-	}
-
-	if !internal.CheckIsBanner(banner) {
-		fmt.Println("Wrong number of arguments\nUsage: \"go run . --align=right something shadow\"") // Вывод сообщения
-
+	align := internal.FindFile(os.Args[1])
+	if align == "Failed" {
+		fmt.Println("Missing argument")
 		os.Exit(0)
 	}
 
-	if !internal.CheckForChangeFile("assets/"+banner+".txt", banner) { // Если файл изменен
-		fmt.Println("The file has been changed , the program will close") // Вывод сообщения об изменении в файле
+	var text string
+	var banner string
 
-		os.Exit(0) // Выход из программы с ошибкой 1
+	if len(os.Args) == 4 {
+		text = os.Args[2]
+		banner = os.Args[3]
+	} else {
+		text = os.Args[2]
+		banner = "standard"
+	}
+
+	text, notValidText := internal.CheckIsAscii(text)
+	if notValidText != "" {
+		fmt.Println(notValidText)
+		os.Exit(0)
+	}
+
+	if !internal.CheckIsBanner(banner) {
+		fmt.Println("Wrong number of arguments\nUsage: \"go run . --align=right something shadow\"")
+		os.Exit(0)
+	}
+
+	if !internal.CheckForChangeFile("assets/"+banner+".txt", banner) {
+		fmt.Println("The file has been changed , the program will close")
+		os.Exit(0)
 	}
 
 	text = strings.Trim(text, " ")
+	splitedWords, standardAscii := internal.PrepareForOutput(banner, text)
+	output := ""
 
-	splitedWords, standardAscii := internal.PrepareForOutput(banner, text) // Сохранение результата функции
-	output := ""                                                           // Создание пустой переменной для сохранения графического рисунка
-
-	for _, word := range splitedWords { // Проходим по разбитым словам и отображаем их в виде ASCII-арт.
-		if word == "" { //  Если равно пустоте
-			output += "\n" // Добавление новой строки
-
-			continue //	Следующий элемент
+	for _, word := range splitedWords {
+		if word == "" {
+			output += "\n"
+			continue
 		}
-		for index := 1; index <= 8; index++ { // Цикл для отображения 8 строк текста ввиде графического ключа
+		for index := 1; index <= 8; index++ {
 			check := true
-
-			for _, ch := range word { //	Цикл, для каждой буквы текста
+			for _, ch := range word {
 				if ch != ' ' {
 					check = true
 				}
@@ -160,15 +151,13 @@ func Justify() {
 					output += "+"
 					check = false
 				}
-
 				if !check {
 					continue
 				}
-				output += standardAscii[int((ch-32)*9)+index] // Сохранение графического ключа построчно
+				output += standardAscii[int((ch-32)*9)+index]
 			}
 			output += "\n"
 		}
 	}
-
-	Aling(align, output, text) // Вызов функции
+	Aling(align, output, text)
 }
