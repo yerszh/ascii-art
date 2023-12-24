@@ -46,51 +46,45 @@ func GetTermWidth() int {
 
 
 func Aling(align string, output string, text string) {
-	arrayOfOutputWrong := strings.Split(output, "\n")                  // Разделение входящей строки и преобразование ее в массив
-	arrayOfOutput := arrayOfOutputWrong[0 : len(arrayOfOutputWrong)-1] // Удаление последнего элемента
-	terminalWidth := GetTermWidth()                                    // СОхранение результата функции
-	countSpace := CreateSpaces(arrayOfOutput[0], terminalWidth)        // Добавление пробелов в строки
+	arrayOfOutputWrong := strings.Split(output, "\n")
+	arrayOfOutput := arrayOfOutputWrong[0 : len(arrayOfOutputWrong)-1]
+	terminalWidth := GetTermWidth()
+	countSpace := CreateSpaces(arrayOfOutput[0], terminalWidth)
 
 	if align == "justify" && SpaceCount(text) == 0 {
 		align = "center"
 	}
 
 	if terminalWidth < len(arrayOfOutput[0])+len(countSpace) {
-		fmt.Println("Terminal width is too small") // Вывод сообщение об ошибке при создании
-
-		os.Exit(0) // Выход из программы с ошибкой 1
+		fmt.Println("Terminal width is too small")
+		os.Exit(0)
 	}
 
-	switch align { // Выбор между флагами
-	case "left": // Если равен left
+	switch align {
+	case "left":
 		fmt.Print(output)
 	case "right":
-		for _, lineFormArrayOfOutput := range arrayOfOutput { // Цикл для перебора строк в массиве
-			// fmt.Println(len(lineFormArrayOfOutput))
-			spacesLeft := CreateSpaces(lineFormArrayOfOutput, terminalWidth) // Добавление пробелов в строки
-
-			fmt.Print(spacesLeft, lineFormArrayOfOutput) // Вывод строки
+		for _, lineFormArrayOfOutput := range arrayOfOutput {
+			spacesLeft := CreateSpaces(lineFormArrayOfOutput, terminalWidth)
+			fmt.Print(spacesLeft, lineFormArrayOfOutput)
 		}
 	case "center":
-		for _, lineFormArrayOfOutput := range arrayOfOutput { // Цикл для перебора строк в массиве
-			spaces := CreateSpaces(lineFormArrayOfOutput, terminalWidth) // Добавление пробелов в строки
-			spacesLeft := spaces[0 : len(spaces)/2]                      // Разделение пробелов пополам
-			spacesRight := spaces[0 : len(spaces)/2]                     // Создание пустой переменной для пробелов справка от графического предствления
-
-			if terminalWidth > len(lineFormArrayOfOutput)+len(spacesLeft)+len(spacesRight) { // Если длина строки нечетная
-				spacesRight = spaces[0 : len(spaces)/2+1] // Добавление пробела справа
-			} else if terminalWidth < len(lineFormArrayOfOutput)+len(spacesLeft)+len(spacesRight) { // Если пробелов четное кол-во
-				spacesRight = spaces[0 : len(spaces)/2-1] // Добавление пробела справа
+		for _, lineFormArrayOfOutput := range arrayOfOutput {
+			spaces := CreateSpaces(lineFormArrayOfOutput, terminalWidth)
+			spacesLeft := spaces[0 : len(spaces)/2]
+			spacesRight := spaces[0 : len(spaces)/2]
+			if terminalWidth > len(lineFormArrayOfOutput)+len(spacesLeft)+len(spacesRight) {
+				spacesRight = spaces[0 : len(spaces)/2+1]
+			} else if terminalWidth < len(lineFormArrayOfOutput)+len(spacesLeft)+len(spacesRight) {
+				spacesRight = spaces[0 : len(spaces)/2-1]
 			}
-			// fmt.Println(terminalWidth, len(lineFormArrayOfOutput), len(spacesLeft), len(spacesRight))
-			fmt.Print(spacesLeft, lineFormArrayOfOutput, spacesRight) // Вывод строки
+			fmt.Print(spacesLeft, lineFormArrayOfOutput, spacesRight)
 		}
 	case "justify":
 		counterForSpaceInText := SpaceCount(text)
-		for _, lineFormArrayOfOutput := range arrayOfOutput { // Цикл для перебора строк в массиве
-			spaces := CreateSpaces(lineFormArrayOfOutput, terminalWidth) // Добавление пробелов в строки
+		for _, lineFormArrayOfOutput := range arrayOfOutput {
+			spaces := CreateSpaces(lineFormArrayOfOutput, terminalWidth)
 			spacesHalf := spaces[0 : len(spaces)/(counterForSpaceInText)]
-			// fmt.Println(terminalWidth, len(spacesHalf), len(lineFormArrayOfOutput))
 			for i := 0; i < len(lineFormArrayOfOutput); i++ {
 				if lineFormArrayOfOutput[i] == '+' {
 					fmt.Print(spacesHalf)
@@ -98,11 +92,11 @@ func Aling(align string, output string, text string) {
 					fmt.Print(string(lineFormArrayOfOutput[i]))
 				}
 			}
-
 			fmt.Println()
 		}
 	}
 }
+
 
 func Justify() {
 	align := internal.FindFile(os.Args[1]) // Сохранение значения 1 аргумента как флаг
