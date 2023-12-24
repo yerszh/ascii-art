@@ -8,28 +8,40 @@ import (
 )
 
 func main() {
-if len(os.Args) >= 2 {
-	flag := internal.ClearFlag(os.Args[1]) 
+	if len(os.Args) > 1 { 
+		if len(os.Args) == 2 {
+			option.Fs()
 
-	switch flag { 
-	case "--output": //	Если флаг равен output
-		if len(os.Args) == 4 || len(os.Args) == 3 { // Если кол-во аргументов 4 или 3
-			option.Output() //  Вызов функции
-		} else { // Если кол-во аргументов не 4 и не 3
-			fmt.Println("Wrong number of arguments\nUsage: \"go run . --output=<fileName.txt> something standard\"") // Вывод сообщения
+			return
 		}
 		
-	case "--color": 
-		if len(os.Args) >= 3 && len(os.Args) <= 7 {
-			option.Color()
-		} else {
-			fmt.Println("Wrong number of arguments\nUsage: \"go run . --color=rgb(48, 255, 229) smthng something thinkertoy\"") // Вывод сообщения
+		if os.Args[2] == "" {
+			return
 		}
-	
-	default: 
-		option.Fs()
+
+		flag := internal.ClearFlag(os.Args[1]) 
+
+		switch flag {
+		case "--output": 
+			if len(os.Args) == 4 || len(os.Args) == 3 { 
+				option.Output() 
+			} else { 
+				fmt.Println("Wrong number of arguments\nUsage: \"go run . --output=<fileName.txt> something standard\"") 
+			}
+		case "--color": 
+			if len(os.Args) >= 3 && len(os.Args) <= 7 {
+				option.Color()
+			} else {
+				fmt.Println("Wrong number of arguments\nUsage: \"go run . --color=rgb(48, 255, 229) smthng something thinkertoy\"") 
+			}
+		case "--align": 
+			if len(os.Args) == 4 || len(os.Args) == 3 { 
+				option.Justify()
+			} else {
+				fmt.Println("Wrong number of arguments\nUsage: \"go run . --align=right something shadow\"") 
+			}
+		}
+	} else {
+		fmt.Println("Wrong number of arguments") 
 	}
-} else {
-	fmt.Println("Wrong number of arguments") 
-}
 }
