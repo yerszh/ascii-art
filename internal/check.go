@@ -73,3 +73,14 @@ func CheckIsBanner(banner string) bool {
 	}
 	return true
 }
+
+
+func IsCorrect(value string) bool {
+	for i := 0; i < len(value); i++ { 
+		if value[i] < 0 || value[i] > 126 { 
+			return false
+		}
+	}
+
+	return true
+}
