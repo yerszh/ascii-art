@@ -7,18 +7,18 @@ import (
 	"strings"
 )
 
-// Функция для определения баннера
+
 func BannerFinder(arrayOfGraphicRepresentation []string) string {
-	for _, lineFormArrayOfOutput := range arrayOfGraphicRepresentation { // Перебор массива построчно
-		if strings.ReplaceAll(lineFormArrayOfOutput, " ", "") != "" { // Если строка не пустая
-			for i := 0; i < len(lineFormArrayOfOutput); i++ { //	Перебор строки посимвольно
-				if i+1 <= len(lineFormArrayOfOutput)-1 { //	Если при добавлении 1 к позиции нет выхода за пределы
-					if lineFormArrayOfOutput[i] == '_' && lineFormArrayOfOutput[i+1] != '|' { // Если символ равен _ а следующий не равен |
-						return "standard" //	Возвращение результата
+	for _, lineFormArrayOfOutput := range arrayOfGraphicRepresentation { 
+		if strings.ReplaceAll(lineFormArrayOfOutput, " ", "") != "" { 
+			for i := 0; i < len(lineFormArrayOfOutput); i++ { 
+				if i+1 <= len(lineFormArrayOfOutput)-1 { 
+					if lineFormArrayOfOutput[i] == '_' && lineFormArrayOfOutput[i+1] != '|' { 
+						return "standard" 
 					}
 				}
 
-				if lineFormArrayOfOutput[i] == 'o' { // Если символ равен o
+				if lineFormArrayOfOutput[i] == 'o' { 
 					return "thinkertoy"
 				}
 			}
@@ -62,10 +62,10 @@ func Reverse() {
 		splittedText = strings.Split(graphicRepresentation, "\r\n")
 	}
 
-	if !internal.CheckForChangeFile("assets/"+BannerFinder(splittedText)+".txt", BannerFinder(splittedText)) { // Если файл изменен
-		fmt.Println("The file has been changed , the program will close") // Вывод сообщения об изменении в файле
+	if !internal.CheckForChangeFile("assets/"+BannerFinder(splittedText)+".txt", BannerFinder(splittedText)) { 
+		fmt.Println("The file has been changed , the program will close") 
 
-		os.Exit(0) // Выход из программы с ошибкой 1
+		os.Exit(0) 
 	}
 
 	fontContent, errF := os.ReadFile("assets/" + BannerFinder(splittedText) + ".txt")
