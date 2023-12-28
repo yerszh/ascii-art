@@ -28,6 +28,12 @@ func main() {
 			} else { 
 				fmt.Println("Wrong number of arguments\nUsage: \"go run . --output=<fileName.txt> something standard\"") 
 			}
+		case "--reverse": 
+		if len(os.Args) == 2 {
+			option.Reverse()
+		} else { 
+			fmt.Println("Wrong number of arguments\nUsage: \"go run . --reverse=<fileName.txt>\"") 
+		}	
 		case "--color": 
 			if len(os.Args) >= 3 && len(os.Args) <= 7 {
 				option.Color()

@@ -1,10 +1,12 @@
 package asciiArt
 
 import (
+	"fmt"
 	"os"
 	"regexp"
 	"strings"
 )
+
 
 func onlyNewLines(input []string) bool {
 	for _, ch := range input {
@@ -16,7 +18,13 @@ func onlyNewLines(input []string) bool {
 }
 
 func PrepareForOutput(banner string, text string) ([]string, []string) {
-	dataBytes, _ := os.ReadFile("assets/" + banner + ".txt")
+	dataBytes, err := os.ReadFile("assets/" + banner + ".txt") 
+if err != nil {
+	fmt.Println("Fonts could not be found")
+
+	os.Exit(0)
+}
+
 	standardAscii := []string{}
 
 	if banner == "thinkertoy" {

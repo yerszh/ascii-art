@@ -2,8 +2,36 @@ package asciiArt
 
 import (
 	"fmt"
+	"io"
 	"os"
 )
+
+
+func ReadFile(fileName *os.File) string {
+dataByteFromFile := make([]byte, 64)         
+textFromFile, textAfterCheckForASCII := "", "" 
+
+for { 
+	n, err := fileName.Read(dataByteFromFile)
+	if err == io.EOF {                   
+		break 
+	}
+	textFromFile = textFromFile + string(dataByteFromFile[:n]) 
+}
+
+for i := 0; i < len(textFromFile); i++ { 
+	if textFromFile[i] >= 0 && textFromFile[i] <= 126 { 
+		textAfterCheckForASCII = textAfterCheckForASCII + string(textFromFile[i]) 
+	}
+}
+
+defer fileName.Close() 
+
+return textAfterCheckForASCII 
+}
+
+
+
 
 func FindFile(firstArgument string) string {
 	textAsFileName := ""
